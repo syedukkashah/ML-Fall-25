@@ -240,3 +240,24 @@ print("K-Fold Accuracies:", scores)
 print("Mean Accuracy:", scores.mean())
 
 
+
+from sklearn.model_selection import LeaveOneOut, cross_val_score
+from sklearn.tree import DecisionTreeClassifier
+import pandas as pd
+
+df = pd.read_csv("your_dataset.csv")
+X = df.drop('target', axis=1)
+y = df['target']
+
+# Define LOOCV
+loo = LeaveOneOut()
+
+# Model
+model = DecisionTreeClassifier()
+
+# Evaluate
+scores = cross_val_score(model, X, y, cv=loo, scoring='accuracy')
+
+print("Mean Accuracy (LOOCV):", scores.mean())
+print("Total Iterations:", len(scores))
+
