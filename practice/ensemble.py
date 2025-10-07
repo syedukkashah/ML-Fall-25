@@ -217,3 +217,26 @@ model.fit(X_train, y_train)
 pred = model.predict(X_test)
 print("Accuracy:", accuracy_score(y_test, pred))
 
+
+
+from sklearn.model_selection import KFold, cross_val_score
+from sklearn.tree import DecisionTreeClassifier
+import pandas as pd
+
+df = pd.read_csv("your_dataset.csv")
+X = df.drop('target', axis=1)
+y = df['target']
+
+# Define model
+model = DecisionTreeClassifier()
+
+# Define KFold (e.g., 5 folds)
+kfold = KFold(n_splits=5, shuffle=True, random_state=42)
+
+# Evaluate using cross_val_score
+scores = cross_val_score(model, X, y, cv=kfold, scoring='accuracy')
+
+print("K-Fold Accuracies:", scores)
+print("Mean Accuracy:", scores.mean())
+
+
